@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String
+  password String
+  Teacher  Teacher[]
+}
+
+model Student {
+  id               Int                @id @default(autoincrement())
+  name             String
+  email            String
+  birthdate        String
+  contact          String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  ClassroomStudent ClassroomStudent[]
+  ExamResult       ExamResult[]
+}
+
+model Teacher {
+  id        Int         @id @default(autoincrement())
+  name      String
+  email     String
+  birthdate String
+  contact   String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userId    Int
+  User      User        @relation(fields: [userId], references: [id])
+  Classroom Classroom[]
+}
+
+model Classroom {
+  id               Int                @id @default(autoincrement())
+  status           Status?            @default(ACTIVE)
+  teacherId        Int
+  Teacher          Teacher            @relation(fields: [teacherId], references: [id])
+  Course           Course[]
+  ClassroomStudent ClassroomStudent[]
+}
+
+model Course {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  classroomId Int
+  Classroom   Classroom @relation(fields: [classroomId], references: [id])
+}
+
+model Exam {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  date        String
+  ExamResult  ExamResult[]
+}
+
+model ExamResult {
+  id        Int     @id @default(autoincrement())
+  examId    Int
+  Exam      Exam    @relation(fields: [examId], references: [id])
+  studentId Int
+  Student   Student @relation(fields: [studentId], references: [id])
+  score     Int
+}
+
+model ClassroomStudent {
+  id          Int       @id @default(autoincrement())
+  classroomId Int
+  Classroom   Classroom @relation(fields: [classroomId], references: [id])
+  studentId   Int
+  Student     Student   @relation(fields: [studentId], references: [id])
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
