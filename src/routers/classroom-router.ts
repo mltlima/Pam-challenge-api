@@ -12,5 +12,6 @@ classroomRouter.get('/:classroomId', classroomController.getClassroomById);
 classroomRouter.put('/:classroomId', validateBody(schemas.classroomSchema), classroomController.updateClassroom);
 classroomRouter.delete('/:classroomId', classroomController.deleteClassroom);
 classroomRouter.get('/', classroomController.getAllClassrooms);
+classroomRouter.post('/student', validateBody(schemas.classroomStudentSchema), classroomController.createClassroomStudent);
 
 export { classroomRouter };

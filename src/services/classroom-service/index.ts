@@ -1,4 +1,5 @@
 import classroomRepository from "@/repositories/classroom-repository";
+import studentRepository from "@/repositories/student-repository";
 import { Status } from '@prisma/client';
 
 import { conflictError, invalidDataError, notFoundError } from "@/errors";
@@ -35,12 +36,23 @@ async function getAllClassrooms() {
     return await classroomRepository.getAllClassrooms();
 }
 
+async function createClassroomStudent(classroomId: number, studentId: number) {
+    const existingClassroom = await classroomRepository.getClassroomById(classroomId);
+    if (!existingClassroom) throw notFoundError();
+
+    const existingStudent = await studentRepository.getStudentById(studentId);
+    if (!existingStudent) throw notFoundError();
+
+    await classroomRepository.createClassroomStudent(classroomId, studentId);
+}
+
 const classroomService = {
     createClassroom,
     getClassroomById,
     updateClassroom,
     deleteClassroom,
     getAllClassrooms,
+    createClassroomStudent,
 };
 
 export default classroomService;

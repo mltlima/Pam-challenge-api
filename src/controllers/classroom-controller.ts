@@ -32,3 +32,9 @@ export async function getAllClassrooms(req: Request, res: Response) {
     const classrooms = await classroomService.getAllClassrooms();
     res.status(httpStatus.OK).send(classrooms);
 }
+
+export async function createClassroomStudent(req: Request, res: Response) {
+    const { classroomId, studentId } = req.body;
+    await classroomService.createClassroomStudent(classroomId, studentId);
+    res.sendStatus(httpStatus.CREATED);
+}

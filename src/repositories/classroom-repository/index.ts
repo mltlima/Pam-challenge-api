@@ -26,6 +26,10 @@ const getAllClassrooms = async () => {
     return await prisma.classroom.findMany();
 }
 
+async function createClassroomStudent(classroomId: number, studentId: number) {
+    await prisma.classroomStudent.create({ data: { classroomId, studentId } });
+}
+
 const classroomRepository = {
     create,
     getClassroomById,
@@ -33,6 +37,7 @@ const classroomRepository = {
     updateClassroom,
     deleteClassroom,
     getAllClassrooms,
+    createClassroomStudent,
 };
 
 export default classroomRepository;
