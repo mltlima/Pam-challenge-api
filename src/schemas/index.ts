@@ -26,11 +26,18 @@ const classroomSchema = Joi.object().keys({
     status: Joi.string().valid(Status.ACTIVE, Status.INACTIVE).allow(null),
 });
 
+const courseSchema = Joi.object().keys({
+    name: Joi.string().min(3).required(),
+    description: Joi.string().min(3).required(),
+    classroomId: Joi.number().required(),
+});
+
 const schemas = {
     userSchema,
     teacherSchema,
     studentSchema,
     classroomSchema,
+    courseSchema,
 };
 
 export default schemas;
