@@ -13,9 +13,17 @@ const teacherSchema = Joi.object().keys({
     userId: Joi.number().required(),
 });
 
+const studentSchema = Joi.object().keys({
+    name: Joi.string().min(3).required(),
+    email: Joi.string().email().required(),
+    birthdate: Joi.date().required(),
+    contact: Joi.string().min(5).required(),
+});
+
 const schemas = {
     userSchema,
     teacherSchema,
+    studentSchema,
 };
 
 export default schemas;

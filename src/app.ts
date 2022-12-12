@@ -8,7 +8,7 @@ import { loadEnv, connectDb, disconnectDB } from '@/config';
 loadEnv();
 
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, teachersRouter } from '@/routers';
+import { usersRouter, teachersRouter, studenRouter } from '@/routers';
 
 const app = express();
 app
@@ -16,7 +16,8 @@ app
   .use(express.json())
   .get('/', (_req, res) => res.send('OK!'))
   .use(usersRouter)
-    .use('/teacher', teachersRouter)
+  .use('/teacher', teachersRouter)
+  .use('/student', studenRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
