@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { Status } from '@prisma/client';
 
 const userSchema = Joi.object().keys({
     username: Joi.string().min(3).required(),
@@ -20,10 +21,16 @@ const studentSchema = Joi.object().keys({
     contact: Joi.string().min(5).required(),
 });
 
+const classroomSchema = Joi.object().keys({
+    teacherId: Joi.number().required(),
+    status: Joi.string().valid(Status.ACTIVE, Status.INACTIVE).allow(null),
+});
+
 const schemas = {
     userSchema,
     teacherSchema,
     studentSchema,
+    classroomSchema,
 };
 
 export default schemas;
