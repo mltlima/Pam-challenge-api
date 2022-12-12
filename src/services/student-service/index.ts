@@ -1,4 +1,4 @@
-import studentRepository, { Student } from "@/repositories/student-reposirory";
+import studentRepository, { Student } from "@/repositories/student-repository";
 
 import { invalidCredentialsError } from './errors';
 import { conflictError, invalidDataError, notFoundError } from "@/errors";
@@ -30,6 +30,7 @@ async function deleteStudent(studentId: number) {
 
     await studentRepository.deleteStudent(studentId);
 }
+
 
 const studentService = {
     createStudent,

@@ -12,5 +12,6 @@ examRouter.get('/:examId', examController.getExamById);
 examRouter.put('/:examId', validateBody(schemas.examSchema), examController.updateExam);
 examRouter.delete('/:examId', examController.deleteExam);
 examRouter.get('/', examController.getAllExams);
+examRouter.post('/result', validateBody(schemas.examResultSchema), examController.createExamResult);
 
 export { examRouter };

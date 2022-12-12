@@ -32,3 +32,9 @@ export async function getAllExams(req: Request, res: Response) {
     const exams = await examService.getAllExams();
     res.status(httpStatus.OK).send(exams);
 }
+
+export async function createExamResult(req: Request, res: Response) {
+    const { examId, studentId, score } = req.body;
+    await examService.createExamResult({examId, studentId, score});
+    res.sendStatus(httpStatus.CREATED);
+}

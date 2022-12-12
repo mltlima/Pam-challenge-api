@@ -1,4 +1,5 @@
-import examRepository, { Exam } from "@/repositories/exam-repository";
+import examRepository, { Exam, ExamResult } from "@/repositories/exam-repository";
+import studentRepository from "@/repositories/student-repository";
 import { conflictError, invalidDataError, notFoundError } from "@/errors";
 
 async function createExam(exam: Exam) {
@@ -30,12 +31,23 @@ async function getAllExams() {
     return await examRepository.getAllExams();
 }
 
+async function createExamResult(examResult: ExamResult) {
+    const existingExam = await examRepository.getExamById(examResult.examId);
+    if (!existingExam) throw notFoundError();
+
+    const existingStudent = await studentRepository.getStudentById(examResult.studentId);
+    if (!existingStudent) throw notFoundError();
+
+    await examRepository.createExamResult(examResult);
+}
+
 const examService = {
     createExam,
     getExamById,
     updateExam,
     deleteExam,
     getAllExams,
+    createExamResult,
 };
 
 export default examService;

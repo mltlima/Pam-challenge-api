@@ -6,6 +6,12 @@ export interface Exam {
     date: string;
 }
 
+export interface ExamResult {
+    examId: number;
+    studentId: number;
+    score: number;
+}
+
 async function createExam(exam: Exam) {
     await prisma.exam.create({ data: exam });
 }
@@ -26,12 +32,17 @@ const getAllExams = async () => {
     return await prisma.exam.findMany();
 }
 
+async function createExamResult(examResult: ExamResult) {
+    await prisma.examResult.create({ data: examResult });
+}
+
 const examRepository = {
     createExam,
     getExamById,
     updateExam,
     deleteExam,
     getAllExams,
+    createExamResult,
 };
 
 export default examRepository;
